@@ -44,19 +44,19 @@ router.post(
       const filePath = path.join(__dirname, "../../uploads", req.file.filename);
       const fileContent = fs.readFileSync(filePath);
 
-    //   const params: AWS.S3.PutObjectRequest = {
-    //     Bucket: process.env.AWS_BUCKET_NAME!,
-    //     Key: req.file.filename,
-    //     Body: fileContent,
-    //   };
+      const params: AWS.S3.PutObjectRequest = {
+        Bucket: process.env.AWS_BUCKET_NAME!,
+        Key: req.file.filename,
+        Body: fileContent,
+      };
 
-    //   const uploadResult = await s3.upload(params).promise();
+      const uploadResult = await s3.upload(params).promise();
 
       fs.unlinkSync(filePath);
 
       res.status(200).json({
         message: "File uploaded successfully",
-        // data: uploadResult,
+        data: uploadResult,
       });
     } catch (error) {
       console.error("Error uploading file to S3:", error);
